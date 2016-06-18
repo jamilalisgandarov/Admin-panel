@@ -5,20 +5,22 @@ class Database
 	public $db_user;
 	public $db_pass;
 	public $db_host;
+	public $mysqli;
 	public $myArray=[];
+	public $searchedArray=[];
 	function __construct($host,$user,$pass,$name)
 	{
 		$this->db_name=$name;
 		$this->db_user=$user;
 		$this->db_pass=$pass;
 		$this->db_host=$host;
-		$this->mysqli=new mysqli($host,$user,$pass,$name);
+		$this->mysqli=mysqli_connect($host,$user,$pass,$name);
 		if ($this->mysqli->connect_errno) {
 			echo "error";
 		}
 	}
 	function insert($title,$short_desc,$full_desc,$category,$img,$published){
-		$insert="INSERT INTO news(title,short_desc,full_desc,category,image,published) VALUES('$title','$short_desc','$full_desc','$category','$img','$published')";
+		$insert="INSERT INTO news(title,short_desc,full_desc,category,img,published) VALUES('$title','$short_desc','$full_desc','$category','$img','$published')";
 		$this->mysqli->query($insert);
 	}
 	function show(){
@@ -44,8 +46,8 @@ class Database
 			return $this->myArray;
 		}
 	}
-	function update($id,$title,$short_desc,$full_desc,$category,$img,$published){
-		$update="UPDATE news SET title = '$title', short_desc = '$short_desc', full_desc='$full_desc',category='$category', image='dadad',published=$published WHERE id=$id";
+	function update($id,$title,$short_desc,$full_desc,$category,$image,$published){
+		$update="UPDATE news SET title = '$title', short_desc = '$short_desc', full_desc='$full_desc',category='$category', img='$image',published=$published WHERE id=$id";
 		$updateQ=$this->mysqli->query($update);
 
 	}
@@ -54,7 +56,7 @@ class Database
 		$result=$this->mysqli->query($news);
 	}
 	function addMain(){
-		$news="SELECT * FROM news";
+		$news="SELECT * FROM news WHERE published=true";
 		$result=$this->mysqli->query($news);
 		if ($result->num_rows>0) {
 			while ($fetched=$result->fetch_assoc()) {
@@ -65,6 +67,17 @@ class Database
 
 
 	}
+	function search($input){
+		$news="SELECT * FROM news WHERE title LIKE '$input%'";
+		$result=$this->mysqli->query($news);
+		if ($result->num_rows>0) {
+			while ($fetched=$result->fetch_assoc()) {
+				array_push($this->searchedArray,$fetched);	
+			}
+			return $this->searchedArray;
+		}
+	}
+
 }
  ?>
 

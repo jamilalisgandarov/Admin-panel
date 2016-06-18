@@ -17,12 +17,14 @@ else{
 $checked=false;
 }	
 if(isset($_POST['submit'])){
+	$image=$_FILES['image']['name'];
+	$tmpName=$_FILES['image']['tmp_name'];
+	move_uploaded_file($tmpName,'uploadedImages/'.$image);
 	 $new_title=$_POST['title'];
 	$new_short_desc=$_POST['short_desc'];
 	$new_full_desc=$_POST['full_desc'];
 	$new_category=$_POST['category'];
-	$new_image=$_POST['image'];
-	$myDB->update($id,$new_title,$new_short_desc,$new_full_desc,$new_category,$new_image,$checked);
+	$myDB->update($id,$new_title,$new_short_desc,$new_full_desc,$new_category,$image,$checked);
 	header("Location:allnews.php");
 	}
 }
@@ -93,7 +95,7 @@ if(isset($_POST['submit'])){
 		
 		<div class="row">
 			<div class="col-md-12">
-				<form action="" method="post" role="form">
+				<form action="" method="post" role="form" enctype="multipart/form-data">
 					<div class="form-group">
 						<label for="title"> Title</label>
 						<input type="text" name="title" id="title" value=<?php echo $array['title'] ?> class="form-control">

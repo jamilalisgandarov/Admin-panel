@@ -60,7 +60,7 @@
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		
 		<ul class="nav menu">
-			<li class="active"><a href="allnews.html"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> All News</a></li>
+			<li class="active"><a href="allnews.php"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> All News</a></li>
 			<li><a href="add.php"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Add New</a></li>
 			
 			
@@ -100,7 +100,7 @@
    						echo $news[$i]['title'];
    					echo "</td>";
    					echo "<td>";
-   						echo $news[$i]['image'];
+   						echo $news[$i]['img'];
    					echo "</td>";
    					echo "<td><a href=edit.php?id=".$news[$i]['id'].">Edit</a></td>";
    					echo "<td><a href=delete.php?id=".$news[$i]['id'].">Delete</a></td>";

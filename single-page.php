@@ -50,7 +50,7 @@ var_dump($array1);
 			<div class="header">
 				<div class="wrap">
 				<div class="logo">
-					<a href="index.html"><img src="images/logo.png" title="pinbal" /></a>
+					<a href="index.php"><img src="images/logo.png" title="pinbal" /></a>
 				</div>
 				     	  
 				<div class="top-searchbar">
@@ -75,7 +75,7 @@ var_dump($array1);
 			<div class="single-page">
 							<div class="single-page-artical">
 								<div class="artical-content">
-									<img src="images/single-post-pic.jpg" title="banner1">
+									<img src="admin/uploadedImages/<?php echo $array1['img']?>" title="banner1">
 									<h3><a href="#"><?php echo $array1['title'] ;?></a></h3>
 									<p><?php echo $array1['full_desc'] ;?></p> 
 								    </div>

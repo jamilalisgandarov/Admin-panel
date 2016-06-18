@@ -1,9 +1,12 @@
 <?php
 include "admin/class/db.php";
 $myDB = new Database("localhost","root","","news_db");
-$id=$_GET["id"];
-$myDB->edit($id);
-$array1=$myDB->myArray[0];
+$myDB->addMain();
+$array=$myDB->myArray;
+if(isset($_POST['submit'])){
+	$search=$_POST['search'];	
+	$array=$myDB->search($search);
+	}
 
 ?>
 <!DOCTYPE HTML>
@@ -54,15 +57,15 @@ $array1=$myDB->myArray[0];
 			<div class="header">
 				<div class="wrap">
 				<div class="logo">
-					<a href="index.html"><img src="images/logo.png" title="pinbal" /></a>
+					<a href="index.php"><img src="images/logo.png" title="pinbal" /></a>
 				</div>
 				
 				 <div class="box" id="box">
 					 
 				</div>       	  
 				<div class="top-searchbar">
-					<form>
-						<input type="text" /><input type="submit" value="" />
+					<form method="post">
+						<input type="text" name='search' /><input type="submit" name="submit" value="" />
 					</form>
 				</div>
 				<div class="userinfo">
@@ -85,7 +88,7 @@ $array1=$myDB->myArray[0];
 			     
 			        for ($i=0; $i <count($array); $i++) { 
 			        	?> <li>
-			        	<a href="single-page.php?id=<?=$array[$i]['id']?>"><img src='images/img3.jpg' width='282' height='210'></a>
+			        	<a href="single-page.php?id=<?=$array[$i]['id']?>"><img src="admin/uploadedImages/<?php echo $array[$i]['img']?>" width='282' height='210'></a>
 			        	<div class='post-info'>
 			        		<div class='post-basic-info'>
 				        		<h3><a href="single-page.php?id=<?=$array[$i]['id']?>"><?php echo $array[$i]['title'];?></a></h3>
@@ -148,20 +151,7 @@ $array1=$myDB->myArray[0];
 		      /**
 		       * When scrolled all the way to the bottom, add more tiles
 		       */
-		      function onScroll() {
-		        // Check if we're within 100 pixels of the bottom edge of the broser window.
-		        var winHeight = window.innerHeight ? window.innerHeight : $window.height(), // iphone fix
-		            closeToBottom = ($window.scrollTop() + winHeight > $document.height() - 100);
-		
-		        if (closeToBottom) {
-		          // Get the first then items from the grid, clone them, and add them to the bottom of the grid
-		          var $items = $('li', $tiles),
-		              $firstTen = $items.slice(0, 10);
-		          $tiles.append($firstTen.clone());
-		
-		          applyLayout();
-		        }
-		      };
+		   
 		
 		      // Call the layout function for the first time
 		      applyLayout();
